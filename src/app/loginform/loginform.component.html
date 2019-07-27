@@ -1,0 +1,143 @@
+<div class="loginmain">
+<div class="ui secondary menu" style="background-color: aliceblue; padding:10px;">
+		<div>
+		<img class=" ui tiny rounded image" style="height: 90px;" src="assets/images/A3take2.png"/>
+		</div>
+		<div class="ui item" style="padding-left: 0;"><h2>Help Out</h2></div>
+		<div class="right menu" style="padding-right: 16px">
+				<div class="ui form">
+						<div class="two fields">
+							<div class="field">
+									<label>{{Usernamestr}}</label>
+									<input type="text" [(ngModel)]="username_login">
+									<div *ngIf="loginErr" style="color:red;">{{loginErr}}</div>
+							</div>
+							<div class="field">
+									<label>{{Passwordstr}}</label>
+									<input type="password" [(ngModel)]="password_login">
+							</div>
+						</div>
+				</div>
+				<div class="item">
+						<div (click)="login()" class="ui teal button">{{SignIn}}</div>
+				</div>
+		</div>
+</div>
+
+<body>
+	<div class="ui container" style="height:75vh">
+		<div class="ui middle aligned two column stackable centered grid" style="margin: 5vh">
+			<div class="column">
+				<div class="row" style="margin-bottom: 10px">
+					<p>{{basicInfo}}</p>
+				</div>
+				<div class="row">
+					<img class="ui fuid image" src="assets/images/stockPhoto.png">
+				</div>
+			</div>
+			<div class="column">
+				<h2 class="ui teal dividing header">
+					{{SignUp}}
+				</h2>
+				<div class="ui form">
+					<div class="field">
+						<label>{{Usernamestr}}</label>
+						<input [(ngModel)]="username" type="text">
+					</div>
+					<div class="field">
+						<label>{{Passwordstr}}</label>
+						<input [(ngModel)]="password" type="password">
+					</div>
+					<div class="field">
+						<label>{{Passwordstr}}</label>
+						<input [(ngModel)]="password2" type="password">
+					</div>
+					<div class="field">
+						<label>{{accessCode}}</label>
+						<input [(ngModel)]="orgID" type="text">
+					</div>
+				</div>
+				<div class="ui teal button signupBtn"(click)= "createNewUser()">{{SignUp}}</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<div class="ui inverted teal vertical footer segment">
+	<div class="ui middle center aligned container">
+		<div class="ui nine column grid">
+			<div class="column" (click)="toEnglish()">English (UK)</div> &nbsp;&nbsp;
+			<div class="column" (click)="toFrench()">Français</div> &nbsp;&nbsp;
+			<div class="column" (click) = "toSpanish()">Español</div> &nbsp;&nbsp;
+			<div class="column" (click) = "toNapali()">Napali</div> &nbsp;&nbsp;
+			<div class="column" (click) = "toSwahili()">Swahili</div> &nbsp;&nbsp;
+			<div class="column" (click) = "toArabic()">عربى </div> &nbsp;&nbsp;
+			<div class="column" (click) = "toBurmese()">မြန်မာ</div> &nbsp; &nbsp;
+			<div class="column" (click) = "toArmenian()">հայերեն</div> &nbsp; &nbsp;
+		</div>
+		</div>
+</div>
+</div>
+<!--
+
+
+
+<body>
+		<div class="fb-header-base">
+		</div>
+		<div class="fb-header">
+			<div id="lul1" class="header2">Help Out</div>
+
+			<div id="form1" class="fb-header">{{Usernamestr}}<br>
+			<input placeholder="" type="mail" name="name" /><br>
+			</div>
+			<div *ngIf="loginErr" style="color:red;">{{loginErr}}</div>
+			
+			<div id="form2" class="fb-header">{{Passwordstr}}<br>
+			<input placeholder="" type="password" name="password" />
+			</div>
+			</div>
+
+		<input (click)="login()" type="submit" class="submit1" value={{SignIn}}/>
+
+		<div class="fb-body">
+			<div id="intro1" class="fb-body">{{basicInfo}}</div>
+			<div id="intro2" class="fb-body">{{SignUp}}</div>
+			<div id="img2" class="fb-body"><img src="assets/images/stockPhoto.png"/></div>
+			<div class="ui card">
+			<div id="form3" class="fb-body">
+				<input [(ngModel)]="name" placeholder=Name type="text" id="name" class="mailbox" /><br>
+				<input [(ngModel)]="username" placeholder={{Usernamestr}} type="text" id="username" class="mailbox"/><br>
+				<input [(ngModel)]="password" placeholder={{Passwordstr}} type="password" id="password1"  class="mailbox"/><br>
+				<input placeholder={{Passwordstr}} type="password" id="password2"  class="mailbox"/><br>
+				<input [(ngModel)]="orgID" placeholder={{accessCode}} type="text" id="accesscode" class="mailbox"/><br>
+				<p id="intro4">By clicking Create an account, you agree to our Terms and that 
+				you have read our Data Policy, including our Cookie Use.</p>
+				<input (click)= "goNext()" type="submit" class="button2" value={{SignUp}} />
+				<br><hr>
+				<p id="intro5"></p>
+				
+			</div>
+			</div>
+			
+		</div>
+
+
+		<div class="fb-body-footer">
+				<div id="fb-body-footer-base" class="fb-body-footer">
+					<i (click)="toEnglish()">English (UK)</i> &nbsp;&nbsp;
+					<i (click)="toFrench()">Français</i> &nbsp;&nbsp;
+					<i (click) = "toSpanish()">Español</i> &nbsp;&nbsp;
+					<i (click) = "toNapali()">Napali </i> &nbsp;&nbsp;
+					<i (click) = "toSwahili()">Swahili </i> &nbsp;&nbsp;
+					<i (click) = "toArabic()">عربى </i> &nbsp;&nbsp;
+					<i (click) = "toBurmese()">မြန်မာ</i> &nbsp; &nbsp;
+					<i (click) = "toArmenian()">հայերեն</i> &nbsp; &nbsp;
+
+					<br><hr>
+        </div>
+			</div>
+	</body>
+-->
+  <!-- <div class="col-md-4 col-md-offset-4"></div> -->
+

@@ -1,0 +1,76 @@
+
+<div class="ui secondary  menu" style="background-color: aliceblue;">
+    <div>
+    <img class=" ui tiny rounded image" style="height: 90px" src="assets/images/A3take2.png"/>
+    </div>
+    <div class="ui item" style="padding-left: 0;"><h2>Help Out</h2></div>
+    <div class="right menu" style="padding-right: 16px">
+      <button class="ui item primary basic button" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+  
+<h1 id="task_title">Post a Task</h1>
+
+<div class="ui three column grid">
+
+  <div class="column"></div>
+
+  <div class="column">
+<form class="ui form" #taskEntryForm="ngForm" (ngSubmit)="onSubmit()">
+    
+  <div class="field" style="inline-size: 100%;">
+      <label>{{taskTitle_label}}</label>
+      <input type="text" [(ngModel)]="taskTitle" name="first-namea" placeholder={{taskTitle_label}}>
+    </div>
+
+    <div class="field" style="inline-size: 100%;">
+      <label>{{taskSummary_label}}</label>
+      <textarea id="task_summary" placeholder="{{taskSummary_label}}"></textarea>
+    </div>
+
+    <div class="field" style="inline-size: 100%;">
+        <label>{{address_label}}</label>
+        <input type="text" [(ngModel)]="address" name="first-namedfhxdkls" placeholder={{address_label}}>
+    </div>
+
+    <div class="field" style="inline-size: 100%;">
+      <label>{{city_label}}</label>
+      <input type="text" [(ngModel)]="city" name="first-namedalen" placeholder={{city_label}}>
+    </div>
+
+    <div class="field" style="inline-size: 100%;">
+      <label>{{state_label}}</label>
+      <input type="text" [(ngModel)]="state" name="first-namedf" placeholder={{state_label}}>
+    </div>
+
+    <div class="field" style="inline-size: 100%;">
+      <label>{{currentLang_label}}</label>
+      <input type="text" [(ngModel)]="language" name="last-nameqe" placeholder={{currentLang_label}}>
+    </div>
+
+    <div class="field" style="inline-size: 100%;">
+        <label>{{date_label}}</label>
+        <input type="date" [(ngModel)]="date" name="first-namer" placeholder={{date_label}}>
+      </div>
+
+    <div class="field" style="inline-size: 100%;">
+        <label>{{time_label}}</label>
+        <input type="time" [(ngModel)]="time" name="first-nameu" placeholder={{time_label}}>
+    </div>
+      
+    <div class="field" style="inline-size: 100%;">
+        <label>{{email_label}}</label>
+        <input type="email" [(ngModel)]="email"  name="first-namet" placeholder={{email_label}}>
+    </div>
+
+
+      <button class="massive ui button btn btn-success" id="ui button submit_task" type="submit" style="inline-size: 100%">
+          Post Problem
+        </button>
+
+  </form>
+</div>
+
+</div>

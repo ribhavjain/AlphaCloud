@@ -1,0 +1,105 @@
+<body>
+
+    <div class="ui container">
+      <div class="ui centered two column grid">
+        <div class="ui four wide column">
+          <div class="ui vertical fluid tabular menu">
+              <a class="item" href="admin">
+                  Profile
+                </a>
+                <a class="active item" href="/admin/access-control">
+                  Access Control
+                </a>
+                <a class="item" href="/admin/analytics">
+                  Analytics
+                </a>
+          </div>
+        </div>
+        <div class="ui ten wide column">
+          <h2 class="ui teal dividing header">
+            Access Control
+          </h2>
+          <p>
+            Manage administrative, volunteer, and client access to your organization's HelpOut services.
+          </p>
+
+          <h3 class="ui header">
+            Generate Access Codes
+          </h3>
+          <p>
+              Let others register for HelpOut as administrators, volunteers, and clients for your organization by giving them a unique access code.
+          </p>
+
+          <div class="ui compact teal inverted menu">
+              <div class="ui simple dropdown item">
+                New Code
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                  <div class="item adminBtn button">Admin</div>
+                  <div class="item volunteerBtn button">Volunteer</div>
+                  <div class="item clientBtn button">Client</div>
+                </div>
+              </div>
+            </div>
+
+          <h3 class="ui header">
+              Users
+          </h3>
+          <table class="ui teal selectable celled table">
+              <thead>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Access</th>
+                    <th>E-mail address</th>
+                  </tr>
+                </thead>
+              <tbody>
+                <tr>
+                  <td class="collapsing">
+                        <div class="ui fitted checkbox">
+                          <input type="checkbox"> <label></label>
+                        </div>
+                  </td>
+                  <td data-label="Name">Allison Geary</td>
+                  <td data-label="Access">Admin</td>
+                  <td data-label="Email">ageary@email.com</td>
+                </tr>
+                <tr>
+                  <td class="collapsing">
+                        <div class="ui fitted checkbox">
+                          <input type="checkbox"> <label></label>
+                        </div>
+                  </td>
+                  <td data-label="Name">Ribhav Jain</td>
+                  <td data-label="Access">Volunteer</td>
+                  <td data-label="Email">rjain@email.com</td>
+                </tr>
+                <tr>
+                  <td class="collapsing">
+                        <div class="ui fitted checkbox">
+                          <input type="checkbox"> <label></label>
+                        </div>
+                  </td>
+                  <td data-label="Name">Danny Vasilyonok</td>
+                  <td data-label="Acess">Client</td>
+                  <td data-label="Email">dvasilyonok@email.com</td>
+                </tr>
+              </tbody>
+              <tfoot class="full-width">
+                  <tr>
+                    <th></th>
+                    <th colspan="4">
+                      <div class="ui right floated small teal labeled icon button">
+                        <i class="user icon"></i> Remove Users
+                      </div>
+                    </th>
+                  </tr>
+                </tfoot>
+          </table>
+          
+        </div>
+      </div>    
+    </div>
+
+  </body>

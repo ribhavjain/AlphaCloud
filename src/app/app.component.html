@@ -1,0 +1,30 @@
+<div class="margin" id="fullPage">
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <div class="modal-dialog profile-modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="onCloseHandled()"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+        <h3>Your session is about to expire!</h3>
+        <h4>{{ this.idleState }} Do you want to stay signed in?</h4>
+        <div class="form-group">
+            <button data-track-content data-content-name="Form" data-content-piece="form_button_primary_1" type="submit"
+              class="btn btn-primary btn-lg" name="masterForm" (click)="reset()">Yes
+            </button>
+            <button data-track-content data-content-name="Form" data-content-piece="form_button_primary_1" type="submit"
+            class="btn btn-default btn-lg" name="masterForm" (click)="logoutUser()">No
+          </button>
+          </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  <div>
+</div>  

@@ -1,0 +1,81 @@
+<div class="ui secondary  menu" style="background-color: aliceblue;">
+    <div>
+    <img class=" ui tiny rounded image" style="height: 90px" src="assets/images/A3take2.png"/>
+    </div>
+    <div class="ui item" style="padding-left: 0;"><h2>Help Out</h2></div>
+    <div class="right menu" style="padding-right: 16px">
+      <button class="ui item primary basic button" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+
+<div class="ui three column grid">
+    <div class="column">
+      
+    </div>
+    <div class="column">
+        
+
+            <div class="ui card centered fluid">
+                <div class="content">
+                  <div class="header">{{title}}</div>
+                  <div class="meta">Posted on : {{postdate | date : "MMMM d, yyyy h:mm a" }}</div>
+                  <div class="description">
+                    {{summary}}
+                  </div>
+                </div>
+                
+                <form class="ui centered form">
+
+                  <div class="row" style = "padding-left: 8px; padding-right: 8px;">
+                      <div class="field">
+                        <label>Full Name</label>
+                        <input type="text" name="first-name" placeholder="Full Name">
+                      </div>
+                </div>
+
+
+                <div class="row" style = "padding-left: 8px; padding-right: 8px;">
+                      <div class="field">
+                        <label>Email</label>
+                        <input [(ngModel)]="emailv" type="email" name="last-name" placeholder="Email Address">
+                      </div>
+                  </div>
+                    
+                <!-- If we want a checkbox <div class="row" style = "padding-left: 8px; padding-right: 8px; margin-top: 16px;
+                  margin-bottom: 16px;">
+                  <div class="field">
+                      <div class="ui checkbox">
+                        <input type="checkbox" tabindex="0" class="hidden">
+                        <label>I agree to the Terms and Conditions</label>
+                      </div>
+                    </div>
+                  </div>    -->
+
+
+                    <div class = "centered" style = "padding-left: 32%; margin-top: 16px">
+                        <button class="ui primary button" type="submit" (click)=sendIt()>
+                          Accept
+                        </button>
+                        <button class="ui button" (click)=goNext()>
+                          Return
+                        </button>
+                      </div>
+                  </form>
+
+                  <div class="extra content">
+                      <i class="check icon"></i>
+                      {{due_date}}
+                    </div>
+              </div>
+
+
+
+          
+
+
+      
+    </div>
+    
+  </div>

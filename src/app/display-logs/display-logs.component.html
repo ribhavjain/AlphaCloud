@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<div class="container-fluid text-center">
+
+  <!-- Shows list of logs -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col-md-4">Log ID</th>
+        <th scope="col-md-1">Username</th>
+        <th scope="col-md-5">Timestamp</th>
+        <th scope="col-md-2">User Event</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input #filter1 name ="filter1" type="text" [(ngModel)] = 'id'></td>
+        <td><input #filter2 name ="filter2" type="text" [(ngModel)] = 'username'></td>
+        <td><input #filter3 name ="filter3" type="text" [(ngModel)] = 'timestamp'></td>
+        <td><input #filter4 name ="filter4" type="text" [(ngModel)] = 'event'></td>
+      </tr>
+      <tr *ngFor = "let log of allLogs | logFilter: id: username: timestamp: event;">
+        <td>{{ log._id }}</td>
+        <td>{{ log.username }}</td>
+        <td>{{ log.timestamp }}</td>
+        <td>{{ log.userEvent }}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  </div>

@@ -1,0 +1,242 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="ready">
+
+<div class="container-fluid text-center">
+
+  <!-- This is how you do it for mapquest-->
+    <!-- <head>
+        <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+    
+        <script type="text/javascript">
+          window.onload = function() {
+            L.mapquest.key = 'A7YU59cLYGZp2obKOz2PhkTGqs0pCxmA';
+    
+            var map = L.mapquest.map('map', {
+              center: [39.7392, -104.9903],
+              layers: L.mapquest.tileLayer('map'),
+              zoom: 6
+            });
+    
+            L.marker([39.7392, -104.9903], {
+              icon: L.mapquest.icons.marker(),
+              draggable: false
+            }).bindPopup('Denver, CO').addTo(map);
+    
+            L.circle([38.8339, -104.8214], { radius: 20000 }).addTo(map);
+    
+            var denverLatLngs = [
+              [36.99, -102.05],
+              [37, -109.05],
+              [41, -109.05],
+              [41, -102.05]
+            ];
+    
+            L.polygon(denverLatLngs, {color: 'red'}).addTo(map);
+          };
+        </script>
+      </head> -->
+  <!-- Shows list of plans user has created or has access to -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Program Name</th>
+        <th scope="col">Survey ID</th>
+        <th scope="col">Survey Name</th>
+        <th scope="col">Survey Template</th>
+        <th scope="col">Date Last Updated</th>
+        <th scope="col">Last Updated By</th>
+        <th scope="col">Progress</th>
+        <th scope="col">Approval</th>
+        <th scope="col">Relationships</th>
+        <th scope="col">View</th>
+        <th scope="col">Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input #filter0 name ="filter0" type="text" size="2" [(ngModel)] = 'filterPlanID'></td>
+        <td><input #filter1 name ="filter1" type="text" [(ngModel)] = 'filterProgramName'></td>
+        <td><input #filter2 name ="filter2" type="text" [(ngModel)] = 'filterPlanType'></td>
+        <td><input #filter3 name ="filter3" type="text" [(ngModel)] = 'filterLastUpdated'></td>
+        <td><input #filter4 name ="filter4" type="text" [(ngModel)] = 'filterLastUpdatedBy'></td>
+      </tr>
+      <!--Program Level-->
+      <ng-container *ngFor = "let programSurveys of programArray; let i = index">
+        <!-- If the program is not expanded -->
+        <ng-container *ngIf="(!programToggle[i])">
+          <tr><td class="td-center">
+            <i class="material-icons" (click) = "toggleProgramExpand(i)" >add_circle_outline</i>
+          </td>
+          <td class="td-left" colspan="4"> 
+          <ng-container *ngIf = "programArray[i][0]">{{ programArray[i][0].pcProgramName }}</ng-container>
+          </td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+      </tr>
+        </ng-container>
+        <!-- If it is expanded display the corresponding surveys with an ngFor-->
+        <ng-container *ngIf="(programToggle[i])">
+          <tr><td class="td-center">
+            <i class="material-icons" (click) = "toggleProgramExpand(i)" >remove_circle_outline</i>
+          </td>
+          <td class="td-left" colspan="4"> <ng-container *ngIf = "programArray[i][0]">{{ programArray[i][0].pcProgramName }}</ng-container></td>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+
+          <!-- Top Level Surveys-->
+          <ng-container *ngFor = "let survey of programSurveys; let j = index">
+            <tr><td class="td-left"></td>
+            <!-- If the survey is not expanded-->
+            <ng-container *ngIf="!survey.isToggled">
+              <td class="td-left">
+                <i class="material-icons" (click) = "toggleExpand(survey)" >add_circle_outline</i>
+              </td>
+            </ng-container>
+            <!-- If the survey is expanded-->
+            <ng-container *ngIf="survey.isToggled">
+                <td class="td-left">
+                  <i class="material-icons" (click) = "toggleExpand(survey)" >remove_circle_outline</i>
+                </td>
+              </ng-container>
+            <!-- The survey information will always be displayed -->
+              <td class="td-left">{{ survey.plan_id }}</td>        
+              <td class="td-left">{{ survey.programName }}</td>
+              <td class="td-left">{{ survey.planType }}</td>
+              <td class="td-left">{{ survey.lastUpdated | date : 'medium' }}</td> <!-- Pipe date to medium format -->
+              <td class="td-left">{{ survey.lastUpdatedBy }}</td>
+              <td class="td-center" *ngIf="latestRevs[survey.latestRev]"><span [ngClass]="badgeIndicator(survey.progress)" class="badge" style="display:inline-block;width:50px" [matTooltip]="latestRevs[survey.latestRev].percentDoneArr">{{survey.progress}}%</span></td>
+              <td class="td-center"  *ngIf="latestRevs[survey.latestRev]"><span [ngClass]="approvalIndicator(latestRevs[survey.latestRev].approvalStatus)" class="badge" style="display:inline-block;width:75px">{{ latestRevs[survey.latestRev].approvalStatus }}</span></td>
+              <td class="td-center"><a (click)="showRelationships(survey)"><i class="material-icons" data-toggle="modal" data-target="#relationshipsModal">people</i></a></td>
+              <td class="td-center"><a (click)="planService.planView(survey)"><i class="material-icons">remove_red_eye</i></a></td>
+              <!-- Only shows "Edit" button if username is in writeAccess array -->
+              <td class="td-center"><a *ngIf="(survey.writeAccess.indexOf(myUser.username) != -1) || (isAdmin); else writeElse" (click)="planService.planEdit(survey)">
+                <i class="material-icons">edit</i></a></td>
+            </tr>
+
+            
+            <!-- Subsurvey Level 1 -->
+            <ng-container *ngIf ="survey.isToggled">
+              <ng-container *ngFor = "let subsurvey of survey.subsurveyArray; let k = index">
+                <tr><td class="td-left"></td>
+                <!-- If the suburvey is not expanded-->
+                  <ng-container *ngIf="(!subsurvey.isToggled)">
+                    <td class="td-center">
+                      <i class="material-icons" (click) = "toggleExpand(subsurvey)" >add_circle_outline</i>
+                    </td>
+                  </ng-container>
+                <!-- If the subsurvey is expanded-->
+                <ng-container *ngIf="(subsurvey.isToggled)">
+                  <td class="td-center">
+                    <i class="material-icons" (click) = "toggleExpand(subsurvey)" >remove_circle_outline</i>
+                  </td>
+                </ng-container>
+                <!-- The subsurvey information -->  
+                <td class="td-left">{{ subsurvey.plan_id }}</td>
+                <td class="td-left">{{ subsurvey.programName }}</td>
+                <td class="td-left">{{ subsurvey.planType }}</td>
+                <td class="td-left">{{ subsurvey.lastUpdated | date : 'medium' }}</td> <!-- Pipe date to medium format -->
+                <td class="td-left">{{ subsurvey.lastUpdatedBy }}</td>
+                <td class="td-center" *ngIf="latestRevs[subsurvey.latestRev]"><span [ngClass]="badgeIndicator(subsurvey.progress)" class="badge" style="display:inline-block;width:50px" [matTooltip]="latestRevs[subsurvey.latestRev].percentDoneArr">{{subsurvey.progress}}%</span></td>
+                <td class="td-center"  *ngIf="latestRevs[subsurvey.latestRev]"><span [ngClass]="approvalIndicator(latestRevs[subsurvey.latestRev].approvalStatus)" class="badge" style="display:inline-block;width:75px">{{ latestRevs[subsurvey.latestRev].approvalStatus }}</span></td>
+                <td class="td-center"><a (click)="showRelationships(subsurvey)"><i class="material-icons" data-toggle="modal" data-target="#relationshipsModal">people</i></a></td>
+                <td class="td-center"><a (click)="planService.planView(subsurvey)"><i class="material-icons">remove_red_eye</i></a></td>
+                <!-- Only shows "Edit" button if username is in writeAccess array -->
+                <td class="td-center"><a *ngIf="(survey.writeAccess.indexOf(myUser.username) != -1) || (isAdmin); else writeElse" (click)="planService.planEdit(subsurvey)">
+                  <i class="material-icons">edit</i></a></td>
+                </tr>
+                <!-- Subsurvey Level 2-->
+                <ng-container *ngIf = "(subsurvey.isToggled)">
+                  <ng-container *ngFor = "let subsubsurvey of subsurvey.subsurveyArray; let l = index">
+                    <tr><td class="td-left"></td>
+                      <!-- If the subsubsurvey is not expanded-->
+                      <ng-container *ngIf="(!subsubsurvey.isToggled)">
+                        <td class="td-right" style="text-align: right;">
+                          <i class="material-icons" (click) = "toggleExpand(subsubsurvey)" >add_circle_outline</i>
+                        </td>
+                      </ng-container>
+                      <!-- If the subsubsurvey is expanded-->
+                      <ng-container *ngIf="(subsubsurvey.isToggled)">
+                        <td class="td-right" style="text-align: right;">
+                          <i class="material-icons" (click) = "toggleExpand(subsubsurvey)" >remove_circle_outline</i>
+                        </td>
+                      </ng-container>
+                      <!-- The subsubsurvey information -->  
+                      <td class="td-left">{{ subsubsurvey.plan_id }}</td>
+                      <td class="td-left">{{ subsubsurvey.programName }}</td>
+                      <td class="td-left">{{ subsubsurvey.planType }}</td>
+                      <td class="td-left">{{ subsubsurvey.lastUpdated | date : 'medium' }}</td> <!-- Pipe date to medium format -->
+                      <td class="td-left">{{ subsubsurvey.lastUpdatedBy }}</td>
+                      <td class="td-center" *ngIf="latestRevs[subsubsurvey.latestRev]"><span [ngClass]="badgeIndicator(subsubsurvey.progress)" class="badge" style="display:inline-block;width:50px" [matTooltip]="latestRevs[subsubsurvey.latestRev].percentDoneArr">{{subsubsurvey.progress}}%</span></td>
+                      <td class="td-center"  *ngIf="latestRevs[subsubsurvey.latestRev]"><span [ngClass]="approvalIndicator(latestRevs[subsubsurvey.latestRev].approvalStatus)" class="badge" style="display:inline-block;width:75px">{{ latestRevs[subsubsurvey.latestRev].approvalStatus }}</span></td>
+                      <td class="td-center"><a (click)="showRelationships(subsubsurvey)"><i class="material-icons" data-toggle="modal" data-target="#relationshipsModal">people</i></a></td>
+                      <td class="td-center"><a (click)="planService.planView(subsubsurvey)"><i class="material-icons">remove_red_eye</i></a></td>
+                      <!-- Only shows "Edit" button if username is in writeAccess array -->
+                      <td class="td-center"><a *ngIf="(subsubsurvey.writeAccess.indexOf(myUser.username) != -1) || (isAdmin); else writeElse" (click)="planService.planEdit(subsubsurvey)">
+                        <i class="material-icons">edit</i></a></td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    </tbody>
+  </table>
+  </div>
+
+<!-- Relationships Modal -->
+<div class="modal fade" id="relationshipsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog search-modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" #relationDismiss data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+          <h1>Relationships</h1>
+          <h2>Parents</h2>
+          <tr *ngFor="let parent of parents">
+            <a>{{parent}}</a>
+          </tr>
+          <h2>Peers</h2>
+          <tr *ngFor="let peer of peers">
+            <a>{{peer}}</a>
+          </tr>
+          <h2>Children</h2>
+          <tr *ngFor="let child of children">
+            <a>{{child}}</a>
+          </tr>
+      </div>
+    </div>
+</div>
+</div>
+
+  <!-- User Editing Modal -->
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+  <div class="modal-dialog profile-modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="onCloseHandled()"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+        <h3>Someone is currently editing this plan.</h3>
+        <div class="form-group">
+            <button data-track-content data-content-name="Form" data-content-piece="form_button_primary_1" type="submit"
+              class="btn btn-primary btn-lg" name="masterForm" (click)="onSurveySaved($event)">Yes
+            </button>
+            <button data-track-content data-content-name="Form" data-content-piece="form_button_primary_1" type="submit"
+            class="btn btn-default btn-lg" name="masterForm" (click)="onCloseHandled()">No
+          </button>
+          </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+</div> <!-- End tag for ready boolean, everything goes above this! -->

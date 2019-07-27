@@ -1,0 +1,39 @@
+i { 
+    cursor: pointer; 
+}
+
+.table .td-center {
+    text-align: center;
+}
+
+.table .td-left {
+    text-align: left;
+}
+
+.badge-success {
+    background-color: #BED733;
+}
+
+.badge-warning {
+    background-color: #d79e33;
+}
+
+.badge-danger {
+    background-color: #d74c33;
+}
+
+.badge-draft {
+    background-color: #202E39;
+}
+
+.badge-pending  {
+    background-color: #009FE3;
+}
+
+.badge-approved  {
+    background-color: #BED733;
+}
+
+.badge-rejected  {
+    background-color: #d74c33;
+}

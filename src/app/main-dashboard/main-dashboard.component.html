@@ -1,0 +1,86 @@
+
+<div style="position: fixed; width: 100%; z-index: 100;">
+<div class="ui secondary  menu" style="background-color: aliceblue;">
+    <div>
+    <img class=" ui tiny rounded image" style="height: 90px" src="assets/images/A3take2.png"/>
+    </div>
+    <div class="ui item" style="padding-left: 0;"><h2>Help Out</h2></div>
+    <div class="right menu" style="padding-right: 16px">
+      <button class="ui item primary basic button" (click)="logout()">
+        Logout
+      </button>
+    </div>
+  </div>
+  
+<div style="display: flex; height: 48px; padding: 4px 16px 4px 16px">
+    <div id="lang-drop" class="ui dropdown grey basic button" [ngClass]="{'grey': !filterLang, 'blue':filterLang, 'basic': !filterLang}" >
+        <div class="text">Language</div>
+        <div class="menu">
+            <div class="item">English</div>
+            <div class="item">French</div>
+            <div class="item">Spanish</div>
+            <div class="item">Napali</div>
+            <div class="item">Swahili</div>
+            <div class="item">Burmese</div>
+            <div class="item">Arabic</div>
+            <div class="item">Armenian</div>
+        </div>
+    </div>
+    <div id="date-drop" class="ui calendar grey basic button" [ngClass]="{'grey': !filterDate, 'blue':filterDate, 'basic': !filterDate}" >
+        <div class="text">Date</div>
+    </div>
+
+    <div id="category-drop" class="ui dropdown grey basic button" [ngClass]="{'grey': !filterCat, 'blue':filterCat, 'basic': !filterCat}" >
+        <div class="text">Category</div>
+        <div class="menu">
+            <div class="item" >Open</div>
+            <div class="item" >Completed</div>
+            <div class="item">Expired</div>
+        </div>
+    </div>
+    <button id="clear-fliters" class="ui grey basic button" *ngIf="hasFilters" (click)="clearFilters()"> Clear
+    </button>
+</div>
+
+<div class="ui divider"></div>
+</div>
+
+<div class="two column stackable ui grid" style="height: 100vh; padding-top: 19vh;">
+    <div class="column" style="padding-left: 32px; height: 100%; padding-right: 0; padding-bottom: 0;">
+            <div class="ui stackable cards" style="width:100%; overflow: scroll;  overflow-x: hidden; max-height: 100%; ">
+                    <div class="ui green fluid card" style="height: fit-content; width: -webkit-fill-available" *ngFor="let task of tasks | taskFilter: {language: filterLang, category: filterCat, due_date: filterDate}"
+                    (click)="onSelect(task)">
+                      <div class="content">
+                        <div class="header">{{task.title}} 
+                            <div class="ui label right floated green">
+                                 {{task.category}}
+                              </div>
+                            </div>
+                        <div class="meta">
+                          <a>{{task.name}}</a>
+                        </div>
+                        <div class="description" style="word-wrap: break-word;">
+                          {{ (task.summary.length>100)? (task.summary | slice:0:100)+'...':(task.summary)}}
+                        </div>
+                      </div>
+                      <div class="extra content">
+                        <span class="right floated">
+                          {{task.due_date | date : "MMMM d, yyyy h:mm a" }}
+                        </span>
+                        <span>
+                          <i class="language icon"></i>
+                          {{task.language}}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    
+            </div>
+    </div>
+    <div class="column computer tablet only" style="min-height: -webkit-fill-available; padding-right: 16px; padding-left: 0; ;padding-top: 0;">
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
+            <agm-circle [latitude]="lat" [longitude]="lng" [radius]="area_radius"></agm-circle>
+                <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
+        </agm-map>
+    </div>
+  </div>

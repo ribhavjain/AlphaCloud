@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+html {
+    position: relative;
+    min-height: 100%;
+  }
+.content {
+    margin-bottom: 0; /* Margin bottom by footer height */
+  }
+.dark-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 165px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.btn.sv_complete_btn {
+  display: none;
+}
+
+.my-complete-btn {
+  display:inline !important;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*the panel that holds the save and submit buttons on the edit page*/
+.panel-footer {
+    text-align: left;
+    background-color: #fff;
+}
+
+
+.redFlag { 
+  color: red;
+  vertical-align: bottom;
+  cursor: pointer;
+}
+
+.blackFlag {
+  color: black;
+  vertical-align: bottom;
+  cursor: pointer;
+}
